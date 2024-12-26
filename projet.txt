@@ -1,0 +1,269 @@
+Script started on 2024-12-26 17:30:22+01:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="119" LINES="34"]
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ docker v[K--version
+[?2004lDocker version 24.0.7, build 24.0.7-0ubuntu2~23.10.1
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ kubectl version
+[?2004lClient Version: v1.32.0
+Kustomize Version: v5.5.0
+Server Version: v1.31.0
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ minikube version
+[?2004lminikube version: v1.34.0
+commit: 210b148df93a80eb872ecbeb7e35281b3c582c61
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ curl --version
+[?2004lcurl 8.2.1 (x86_64-pc-linux-gnu) libcurl/8.2.1 OpenSSL/3.0.10 zlib/1.2.13 brotli/1.0.9 zstd/1.5.5 libidn2/2.3.4 libpsl/0.21.2 (+libidn2/2.3.3) libssh/0.10.5/openssl/zlib nghttp2/1.55.1 librtmp/2.3 OpenLDAP/2.6.6
+Release-Date: 2023-07-26
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ldap ldaps mqtt pop3 pop3s rtmp rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz NTLM NTLM_WB PSL SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ minikube start --driver=docker[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mminikube start --driver=docker[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1Pminikube start --driver=docke[Ker[C
+[?2004l😄  minikube v1.34.0 sur Ubuntu 23.10
+✨  Utilisation du pilote docker basé sur le profil existant
+👍  Démarrage du nœud "minikube" primary control-plane dans le cluster "minikube"
+🚜  Extraction de l'image de base v0.0.45...
+🏃  Mise à jour du container docker en marche "minikube" ...
+❗  Failing to connect to https://registry.k8s.io/ from both inside the minikube container and host machine
+💡  Pour extraire de nouvelles images externes, vous devrez peut-être configurer un proxy : https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
+🐳  Préparation de Kubernetes v1.31.0 sur Docker 27.2.0...| WW[K[K/ WW[K[K- WW[K[K\ WW[K[K| WW[K[K/ WW[K[K- WW[K[K\ WW[K[K| WW[K[K/ WW[K[K- WW[K[K\ WW[K[K| WW[K[K/ WW[K[K
+🔎  Vérification des composants Kubernetes...
+    ▪ Utilisation de l'image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Modules activés: storage-provisioner, default-storageclass
+🏄  Terminé ! kubectl est maintenant configuré pour utiliser "minikube" cluster et espace de noms "default" par défaut.
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ kubectl get nodes
+[?2004lNAME       STATUS   ROLES           AGE     VERSION
+minikube   Ready    control-plane   2d20h   v1.31.0
+[?2004h]0;rawend@rawend-1-2: ~[01;32mrawend@rawend-1-2[00m:[01;34m~[00m$ cd application
+[?2004l[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ gedit[K[K[K[K[Kgedit dockerfile[1PockerfileDockerfile[C[C[C[C[C[C[C[C[C
+[?2004l[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ gedit app.py [K
+[?2004l[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker build -t my-app:1.0 .[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mdocker build -t my-app:1.0 .[27mdocker build -t my-app:1.0 . [K
+[?2004lDEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  3.072kB
+Step 1/6 : FROM python:3.9-slim
+ ---> 473b3636d11e
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> c3cce2aaca0a
+Step 3/6 : RUN pip install flask
+ ---> Using cache
+ ---> 270dd7cd0a7b
+Step 4/6 : COPY app.py .
+ ---> 593b035a3977
+Step 5/6 : EXPOSE 80
+ ---> Running in e269e79dfcdf
+Removing intermediate container e269e79dfcdf
+ ---> 8463e1402031
+Step 6/6 : CMD ["python", "app.py"]
+ ---> Running in ed83515b13f6
+Removing intermediate container ed83515b13f6
+ ---> a27ff3a7bb4a
+Successfully built a27ff3a7bb4a
+Successfully tagged my-app:1.0
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker images
+[?2004lREPOSITORY                    TAG        IMAGE ID       CREATED          SIZE
+my-app                        1.0        a27ff3a7bb4a   10 seconds ago   136MB
+my-app                        2.0        421120c3755b   3 hours ago      136MB
+python                        3.9-slim   473b3636d11e   3 weeks ago      125MB
+mon-nginx-personnalise        1.0        02f4d714e105   4 weeks ago      192MB
+mon_projet_nginx_flask-app    latest     02f4d714e105   4 weeks ago      192MB
+my-image                      v5         1cd5747adab5   4 weeks ago      78.1MB
+my-image                      v6         7eafeccb35c8   4 weeks ago      192MB
+my-image                      v1         1c2959427bb7   4 weeks ago      78.1MB
+mon_projet_python_app         latest     fcea9afd190d   4 weeks ago      135MB
+mon-nginx-personnalise        1.3        08fe41a2929f   5 weeks ago      192MB
+mon-nginx-personnalise        1.2        a41bd5785143   5 weeks ago      192MB
+mon-nginx-personnalise        1.1        04a66076cf09   5 weeks ago      192MB
+my-image                      v2         342931494ce8   5 weeks ago      78.1MB
+ubuntu                        latest     59ab366372d5   2 months ago     78.1MB
+ubuntu                        20.04      6013ae1a63c2   2 months ago     72.8MB
+nginx                         latest     60c8a892f36f   2 months ago     192MB
+python                        3.8-slim   b5f62925bd0f   3 months ago     125MB
+gcr.io/k8s-minikube/kicbase   v0.0.45    aeed0e1d4642   3 months ago     1.28GB
+mysql                         5.7        5107333e08a8   12 months ago    501MB
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ gedit deployment.yaml
+[?2004l[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl apply -f deployment.yaml[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mkubectl apply -f deployment.yaml[27mkubectl apply -f deployment.yaml [K
+[?2004ldeployment.apps/my-app created
+service/my-app-service created
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl get pods
+[?2004lNAME                      READY   STATUS    RESTARTS   AGE
+my-app-77db997db4-tqnr5   1/1     Running   0          2m17s
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl get services
+[?2004lNAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP        2d20h
+my-app-service   NodePort    10.108.62.128   <none>        80:30007/TCP   2m33s
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ minikube service my-app-service
+[?2004l|-----------|----------------|-------------|---------------------------|
+| NAMESPACE |      NAME      | TARGET PORT |            URL            |
+|-----------|----------------|-------------|---------------------------|
+| default   | my-app-service |          80 | http://192.168.49.2:30007 |
+|-----------|----------------|-------------|---------------------------|
+🎉  Ouverture du service default/my-app-service dans le navigateur par défaut...
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ Gtk-[1;32mMessage[0m: [34m17:52:47.842[0m: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+^C[?2004l[?2004h[?2004l
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl describe pod my-app[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7m=>kubectl describe pod my-app[27m=>kubectl describe pod my-app [K
+[?2004l= : commande introuvable
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ =>kubectl describe pod my-app[C[1P[1P
+[?2004lName:             my-app-77db997db4-tqnr5
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 26 Dec 2024 17:47:56 +0100
+Labels:           app=my-app
+                  pod-template-hash=77db997db4
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.37
+IPs:
+  IP:           10.244.0.37
+Controlled By:  ReplicaSet/my-app-77db997db4
+Containers:
+  my-app:
+    Container ID:   docker://dd004d130296ed728e284a1da3124053af9bc319ef8e8c1cb8a902c621989b91
+    Image:          my-app:1.0
+    Image ID:       docker://sha256:a896d6d15267e93fd81ab005de6c10ef0b746c3e92d5adba5c196c79288d8860
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 26 Dec 2024 17:47:57 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-vj7qd (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-vj7qd:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  7m56s  default-scheduler  Successfully assigned default/my-app-77db997db4-tqnr5 to minikube
+  Normal  Pulled     7m55s  kubelet            Container image "my-app:1.0" already present on machine
+  Normal  Created    7m55s  kubelet            Created container my-app
+  Normal  Started    7m54s  kubelet            Started container my-app
+
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl logs pod=mu[Ky-app
+[?2004lerror: error from server (NotFound): pods "pod=my-app" not found in namespace "default"
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl logs pod=my-app[C pod=my-app- pod=my-appl pod=my-app[C pod=my-app[C[C[C[C[C[C[C[C[C[C[C
+[?2004lNo resources found in default namespace.
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl logs -l  pod=my-app[1Ppod=my-app
+[?2004lNo resources found in default namespace.
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl logs -l pod=my-app[1P
+[?2004lkubectllogs : commande introuvable
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectllogs -l pod=my-app[1@ [C[C[C[C[C[C[C[C[C[C d=my-app[1Pd=my-app[C =my-appa=my-appp=my-appp=my-app[C[C[C[C[C[C[C
+[?2004lerror: only a selector (-l) or a POD name is allowed
+See 'kubectl logs -h' for help and examples
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl logs -l pod app=my-app[C[C[C[C[C[C[C[C[C[C[C[1P app=my-app[1P app=my-app[1P app=my-app[1Papp=my-app[C[C[C[C[C[C[C[C[C[C[C
+[?2004l * Serving Flask app 'app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://10.244.0.37:80
+[33mPress CTRL+C to quit[0m
+10.244.0.1 - - [26/Dec/2024 16:52:48] "GET / HTTP/1.1" 200 -
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker build -t myapp:2.0 .[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mdocker build -t my-app:2.0.[27m[1Pdocker build -t my-app:2.0.
+[?2004lDEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker build -t my-app:2.0. .
+[?2004lDEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   5.12kB
+Step 1/6 : FROM python:3.9-slim
+ ---> 473b3636d11e
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> c3cce2aaca0a
+Step 3/6 : RUN pip install flask
+ ---> Using cache
+ ---> 270dd7cd0a7b
+Step 4/6 : COPY app.py .
+ ---> Using cache
+ ---> 593b035a3977
+Step 5/6 : EXPOSE 80
+ ---> Using cache
+ ---> 8463e1402031
+Step 6/6 : CMD ["python", "app.py"]
+ ---> Using cache
+ ---> a27ff3a7bb4a
+Successfully built a27ff3a7bb4a
+Successfully tagged my-app:2.0
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker images
+[?2004lREPOSITORY                    TAG        IMAGE ID       CREATED          SIZE
+my-app                        1.0        a27ff3a7bb4a   15 minutes ago   136MB
+my-app                        2.0        a27ff3a7bb4a   15 minutes ago   136MB
+<none>                        <none>     421120c3755b   3 hours ago      136MB
+python                        3.9-slim   473b3636d11e   3 weeks ago      125MB
+mon-nginx-personnalise        1.0        02f4d714e105   4 weeks ago      192MB
+mon_projet_nginx_flask-app    latest     02f4d714e105   4 weeks ago      192MB
+my-image                      v5         1cd5747adab5   4 weeks ago      78.1MB
+my-image                      v6         7eafeccb35c8   4 weeks ago      192MB
+my-image                      v1         1c2959427bb7   4 weeks ago      78.1MB
+mon_projet_python_app         latest     fcea9afd190d   4 weeks ago      135MB
+mon-nginx-personnalise        1.3        08fe41a2929f   5 weeks ago      192MB
+mon-nginx-personnalise        1.2        a41bd5785143   5 weeks ago      192MB
+mon-nginx-personnalise        1.1        04a66076cf09   5 weeks ago      192MB
+my-image                      v2         342931494ce8   5 weeks ago      78.1MB
+ubuntu                        latest     59ab366372d5   2 months ago     78.1MB
+ubuntu                        20.04      6013ae1a63c2   2 months ago     72.8MB
+nginx                         latest     60c8a892f36f   2 months ago     192MB
+python                        3.8-slim   b5f62925bd0f   3 months ago     125MB
+gcr.io/k8s-minikube/kicbase   v0.0.45    aeed0e1d4642   3 months ago     1.28GB
+mysql                         5.7        5107333e08a8   12 months ago    501MB
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ docker images
+[?2004lREPOSITORY                    TAG        IMAGE ID       CREATED          SIZE
+my-app                        1.0        a27ff3a7bb4a   16 minutes ago   136MB
+my-app                        2.0        a27ff3a7bb4a   16 minutes ago   136MB
+<none>                        <none>     421120c3755b   3 hours ago      136MB
+python                        3.9-slim   473b3636d11e   3 weeks ago      125MB
+mon_projet_nginx_flask-app    latest     02f4d714e105   4 weeks ago      192MB
+mon-nginx-personnalise        1.0        02f4d714e105   4 weeks ago      192MB
+my-image                      v5         1cd5747adab5   4 weeks ago      78.1MB
+my-image                      v6         7eafeccb35c8   4 weeks ago      192MB
+my-image                      v1         1c2959427bb7   4 weeks ago      78.1MB
+mon_projet_python_app         latest     fcea9afd190d   4 weeks ago      135MB
+mon-nginx-personnalise        1.3        08fe41a2929f   5 weeks ago      192MB
+mon-nginx-personnalise        1.2        a41bd5785143   5 weeks ago      192MB
+mon-nginx-personnalise        1.1        04a66076cf09   5 weeks ago      192MB
+my-image                      v2         342931494ce8   5 weeks ago      78.1MB
+ubuntu                        latest     59ab366372d5   2 months ago     78.1MB
+ubuntu                        20.04      6013ae1a63c2   2 months ago     72.8MB
+nginx                         latest     60c8a892f36f   2 months ago     192MB
+python                        3.8-slim   b5f62925bd0f   3 months ago     125MB
+gcr.io/k8s-minikube/kicbase   v0.0.45    aeed0e1d4642   3 months ago     1.28GB
+mysql                         5.7        5107333e08a8   12 months ago    501MB
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl set image/deployment/my-app mya[K-app=myapp 2.0[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mkubectl set image deployment/my-app my-app=my-app:2.0[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ckubectl set image deployment/my-app my-app=my-app:2.0
+[?2004ldeployment.apps/my-app image updated
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl scale deployment my-app --replicas=3[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mkubectl scale deployment my-app --replicas=3[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ckubectl scale deployment my-app --replicas=3 [K
+[?2004ldeployment.apps/my-app scaled
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ kubectl delete -f deployment [K.yaml[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[7mkubectl delete -f deployment.yaml[27mkubectl delete -f deployment.yaml [K
+[?2004ldeployment.apps "my-app" deleted
+service "my-app-service" deleted
+[?2004h]0;rawend@rawend-1-2: ~/application[01;32mrawend@rawend-1-2[00m:[01;34m~/application[00m$ exit
+[?2004lexit
+
+Script done on 2024-12-26 18:07:57+01:00 [COMMAND_EXIT_CODE="0"]
